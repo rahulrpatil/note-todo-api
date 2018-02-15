@@ -1,3 +1,5 @@
+require('./config/config');
+
 let express = require('express');
 let bodyParser = require('body-parser');
 const _  = require('lodash');
