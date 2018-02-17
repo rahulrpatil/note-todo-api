@@ -238,3 +238,22 @@ describe('POST /users/login', () => {
             .end(done);
     });
 });
+
+describe('DELETE /users/me/token', () => {
+    it('should remove auth token on logout', (done) => {
+
+        request(app)
+            .delete('/users/me/token')
+            .set('x-auth', users[0].tokens[0].token)
+            .expect(200)
+            .end(done);
+    });
+
+    it('should return 401 if already logged out', (done) => {
+        request(app)
+            .delete('/users/me/token')
+            .set('x-auth', users[0].tokens[0].token)
+            .expect(401)
+            .end(done);
+    });
+});
