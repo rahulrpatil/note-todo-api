@@ -213,3 +213,28 @@ describe('POST /users', () => {
             .end(done);
     });
 });
+
+describe('POST /users/login', () => {
+    it('should login user and return auth token', (done) => {
+
+        request(app)
+            .post('/users/login')
+            .send({email: users[0].email, password: users[0].password})
+            .expect(200)
+            .expect((res) => {
+                expect(res.headers['x-auth']).to.exist;
+                expect(res.body._id).to.exist;
+            }).end(done);
+    });
+
+    it('should return 400 if invalid login', (done) => {
+        let email = 'example1@example.com';
+        let password = '123456';
+
+        request(app)
+            .post('/users/login')
+            .send({email, password})
+            .expect(400)
+            .end(done);
+    });
+});
